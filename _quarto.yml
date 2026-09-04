@@ -7,9 +7,13 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - about.qmd
-      - calculateR.qmd
-      - file_types.qmd
+      - 1.getting_started.qmd
+      - 2.calculateR.qmd
+      - 3.file_types.qmd
+      - 4.dataframes.qmd
+      - 5.working_with_data.qmd 
+      - 6.data_vis.qmd
+      - 7.stats_n_probs.qmd
 
 format:
   html:

@@ -4,8 +4,7 @@ code-annotations: below
 
 # R as a calculator
 
-:::: {.columns}
-
+:::::: columns
 ::: {.column width="49%"}
 ### Maths: `+ - * / ^`
 
@@ -22,8 +21,6 @@ code-annotations: below
 15 %% 6 # remainder
 
 ```
-
-
 :::
 
 ::: {.column width="2%"}
@@ -47,15 +44,14 @@ x == 6
 y != x 
 ```
 
-### Logical: `& |`
+### Logical: `&` and `|`
 
 ```{r}
 (x < 5) & (y == 5)
 (x < 5) | (y == 5)
 ```
 :::
-
-::::
+::::::
 
 ## Objects
 
@@ -71,7 +67,7 @@ y != x
 
 -   one-dimensional collection of values
 
-Types:
+Common vector types/classes:
 
 -   logical: TRUE / FALSE
 
@@ -79,9 +75,11 @@ Types:
 
 -   character: a vector that contains strings of text
 
--   factor: a “formatted” character with restrictions on the possible values of its elements (categorical data)
-
--   date and time
+```{r}
+logical_vector   <- c(TRUE, FALSE, TRUE)
+numeric_vector   <- c(4, 5.2, pi)
+character_vector <- c("four", "five", "six")
+```
 
 More info see: [r-bloggers](https://www.r-bloggers.com/2023/09/understanding-data-types-in-r/)
 
@@ -93,10 +91,9 @@ v <- c(4, "four", 1+pi) # <1>
 v[3]
 ```
 
-1. Atomic vectors can only contain one type. So adding a character to your vector makes all the values comparators
+1.  Atomic vectors can only contain one type. So adding a character to your vector makes all the values characters (coercion)
 
 ::: callout-note
-
 ```{r}
 v_character <- c("four", 1+pi, 1.5+exp(1), 'almost four')# "" vs '' is preference
 is.character(v_character)
