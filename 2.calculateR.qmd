@@ -1,4 +1,6 @@
 ---
+format: live-html
+engine: knitr
 code-annotations: below
 ---
 
@@ -6,12 +8,12 @@ code-annotations: below
 
 :::::: columns
 ::: {.column width="49%"}
-### Maths: `+ - * / ^`
+**Maths:** `+ - * / ^`
 
 ```{r}
 3 + 1 - 2
 
-(3 * 4) / 2
+(3 + 4) / 2
 
 3^2
 
@@ -28,15 +30,17 @@ code-annotations: below
 :::
 
 ::: {.column width="49%"}
-### Save: `<- =`
+**Assign:** `<- =`
 
 ```{r}
-x <- 3 
+x <- 3 # <1>
 y = 3 
 
 ```
 
-### Comparison: `== != < > <= >=`
+1.  **Note:** In R, both `<-` and `=` can be used to assign a value to an object. `<-`is the conventional assignment operator in R. You will often see `=` used inside function calls to specify arguments. Keeping these two uses separate can make code easier to read.
+
+**Comparison:** `== != < > <= >=`
 
 ```{r}
 y == x 
@@ -44,7 +48,7 @@ x == 6
 y != x 
 ```
 
-### Logical: `&` and `|`
+**Logical:** `&` and `|`
 
 ```{r}
 (x < 5) & (y == 5)
@@ -110,3 +114,20 @@ typeof(v_numeric) # internal representation
 
 returns "double" because by default numeric values are stored as "double-precision numbers"
 :::
+
+# Exercises
+
+### Exercise 1: Debug the code
+
+Each line below contains a mistake. Correct it.
+
+```{webr}
+x <- c(1 2 3)
+
+cities <- c(Amsterdam, Rotterdam, Utrecht)
+
+x =< 5
+
+c(1, 2, 3)[0]
+```
+

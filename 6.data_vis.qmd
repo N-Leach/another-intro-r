@@ -1,4 +1,195 @@
+---
+format: live-html
+engine: knitr
+live:
+  show-hints: true
+  show-solutions: true
+---
+
+{{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
+
 # Data Visualization
+
+```{r setup, echo = FALSE}
+
+source("_setup.R")
+
+```
+
+### Why plot?
+
+```{r echo = FALSE}
+data("datasaurus_dozen")
+datasaurus_dozen |>
+  subset(dataset == "dino"| dataset == "star") |>
+  group_by(dataset) |>
+  summarise(mean_x = mean(x),
+            mean_y = mean(y),
+            sd_x = sd(x),
+            sd_y = sd(y),
+            n(),
+            correlation = round(cor(x, y),2)) |>
+  kable(col.names = c("Dataset", "Mean x", "Mean y",
+                      "SD x", "SD y", "Sample size", "Correlation (x,y)")) |>
+  kable_styling()
+            
+
+```
+
+Based only on this table, we might conclude that the datasets tell the same story.
+
+::: {.callout-caution collapse="true"}
+```{r, echo=FALSE}
+datasaurus_dozen |>
+  subset(dataset == "dino"| dataset == "star") |>
+  ggplot(aes(x = x, y = y)) +
+  geom_point() +
+  facet_wrap(~dataset) +
+  theme_bw()
+```
+
+A numerical summary answers a specific question. A plot helps us notice things we did not think to ask.
+:::
+
+## Start with your question
+
+| Question | Data pattern | Base R | GGplot2 |
+|------------------|------------------|------------------|-------------------|
+| How much? | Categories and amounts | `barplot()` | `geom_col()` or `geom_bar()` |
+| How is it distributed? | One quantitative variable | `hist()` or `density()` | `geom_histogram()` or `geom_density()` |
+| Are variables related? | Two quantitative variables | `plot()` | `geom_point()` |
+| How does it change? | Ordered or time-based observations | `plot(type = "l")` | `geom_line()` |
+| Does the pattern differ? | A variable defining groups | `subset()` or `split()` | `facet_wrap()` |
+
+# Base R
+
+### Boxplot
+
+```{r}
+data(iris)
+my_colours <- c('firebrick', 'cornflowerblue', 'seagreen')
+
+# Set graphical parameters:
+# mar = c(bottom, left, top, right) margins
+# bty  = "l" draws only the left and bottom plot border (bty = box type)
+par(mar = c(4, 4, 2, 2), bty = "l")
+
+# horizontal boxplots of sepal length for each species
+boxplot(Sepal.Length ~ Species, 
+        data = iris, 
+        col = my_colours, 
+        horizontal = TRUE)
+```
+
+### Density plots
+
+```{r}
+iris.split <- split(iris, iris$Species)
+d.set <- density(iris.split$setosa$Sepal.Length) 
+d.vers <- density(iris.split$versicolor$Sepal.Length) 
+d.virg <- density(iris.split$virginica$Sepal.Length)
+```
+
+```{r}
+par(mar = c(5, 4, 2, 10), bty = 'l')
+plot(d.set, main = '', xlab = 'S. Length', xlim = range(iris$Sepal.Length))
+lines(d.set, col = my_colours[1])
+lines(d.vers, col = my_colours[2])
+lines(d.virg, col = my_colours[3])
+
+legend(8.2, 0.9, legend = unique(iris$Species), 
+       title = 'SPECIES', 
+       lwd = 1,
+       xpd = TRUE, 
+       col = my_colours)
+```
+
+# GGplot
+
+1.  Data
+
+```{r, fig.height=2, fig.width=2}
+    ggplot(data = iris)
+```
+
+2.  Aesthetics
+
+aesthetics: x and y position, grouping, colours, fills, shapes, area, etc.
+
+```{{r, fig.height= 4, fig.width=4}}
+ggplot(data = iris,
+           mapping = aes(x = Species, y = Sepal.Length))
+```
+    
+
+3.  geometrical layer
+
+type of plot
+
+```{r, fig.height = 4, fig.width = 4}
+ggplot(data = iris,
+       mapping = aes(x = Species, y = Sepal.Length)) +
+  geom_boxplot()
+
+```
+
+4.  Extras
+
+```{r, fig.height=5, fig.width=7}
+    ggplot(data = iris,
+           mapping = aes(x = Species, y = Sepal.Length)) +
+      geom_boxplot(fill = my_colours) +
+      coord_flip() +
+      labs(y = "Sepal Length (mm)", 
+           x = NULL, 
+           title = "Something informative about this plot", 
+           subtitle = "iris {datasets}") +
+      theme_linedraw(base_size = 16)
+
+```
+
+### Density plot
+
+```{r}
+ggplot(data = iris,#fill here says to use Species to group and fill in by Species 
+       mapping = aes(x = Sepal.Length, fill = Species)) +
+  geom_density() +
+  scale_fill_manual(values = my_colours)
+  
+```
+
+```{r}
+ggplot(data = iris,#fill here says to use Species to group and fill in by Species 
+       mapping = aes(x = Sepal.Length, fill = Species)) +
+  geom_density() +
+  scale_fill_manual(values = my_colours) +
+  facet_wrap(~Species)
+```
+
+## Exercises
+
+Use `mtcars` to show the relationship between car weight (`wt`) and fuel economy (`mpg`). Make the plot deliberately ugly while keeping it technically valid. 
+
+::: {callout-tip collapse="true"}
+
+### Example solution
+    
+```{r fig.height= 6}
+ggplot(mtcars, aes(x = wt, y = mpg,colour = factor(cyl), 
+                   shape = factor(gear), size = hp)) +
+  geom_point(alpha = 0.2) +
+  scale_colour_manual(values = c("magenta", "yellow", "cyan")) +
+  scale_size_continuous(range = c(3, 20)) +
+  labs(title = "AN EXTREMELY IMPORTANT CAR GRAPH",
+       x = "Weight",
+       y = "MILES PER GALLON",
+       colour = "CYLINDERS",
+       shape = "GEARS",
+       size = "HORSEPOWER")
+```
+    
+:::
+
 
 ::: callout-tip
 ## Resources

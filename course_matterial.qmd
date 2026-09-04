@@ -1,0 +1,180 @@
+# 0HM120 Advanced data analysis
+
+## Week 1: Fundamentals of descriptive and inferential statistics
+
+### Describing the population
+
+```{r}
+heights <- c(160, 170, 170, 170, 180, 180, 190, 200)
+median(heights)
+mean(heights)
+```
+
+`mode` in R returns the objects type. To get the statistical mode with base R you need to write a function for mode
+
+```{r}
+stat_mode <- function(x){
+  tab <- table(x)
+  mode_cha <- names(tab)[tab == max(tab)]# annoying it returns a character 
+  mode <- as.numeric(mode_cha)
+  return(mode)
+}
+stat_mode(heights)
+```
+
+```{r}
+range(heights)
+max(heights) - min(heights)
+```
+
+```{r}
+var(heights)
+sqrt(var(heights))
+sd(heights)
+```
+
+range(), var(), and sd() summarize the data with individual numbers. A distribution shows the whole pattern of the data. For height, most people are near the average, while very short and very tall people are less common. So a probability distribution describes which values a variable (height) can be and how common or likely those values are.
+
+```{r}
+hist(heights, probability = TRUE,
+     main = "Distribution of Heights",
+     xlab = "Height")
+
+curve(dnorm(x, mean = mean(heights), sd = sd(heights)),
+      add = TRUE,
+      col = "red",
+      lwd = 2)
+```
+
+Taller bars represent more common ranges of height. The red curve is an idealised normal distribution with the same mean and standard deviation as our data. *Note* density: estimated probability per unit on the x-axis. For more on probability density functions (PDF) and kernel density estimation see: [The chemical statistician](https://chemicalstatistician.wordpress.com/2013/06/09/exploratory-data-analysis-kernel-density-estimation-in-r-on-ozone-pollution-data-in-new-york-and-ozonopolis/)
+
+::: callout-tip
+
+You can already see from the summary statistics averages (mean, median, and mode) and more clearly from the plot that sample of heights are not normally distributed. In a truly normal distribution the mean = median = mode. In practice they are close together. Here there are only 8 observations: with a small sample, there is a greater chance of getting an unrepresentative picture of the population because of random variation.
+
+:::
+
+```{ojs}
+//| echo: false
+
+mu = 180
+sigma = 11
+
+// Create one fixed simulated population
+randomHeight = d3.randomNormal(mu, sigma)
+population = d3
+  .range(1000)
+  .map(() => Math.round(randomHeight())) //nearest cm 
+
+// Control: set your sample size 
+viewof sampleSize = Inputs.range(
+  [2, 100],
+  {
+    value: 8,
+    step: 1,
+    label: "Sample size"
+  }
+)
+
+viewof newSample = Inputs.button("Draw another sample")
+
+// Draw a new sample when either input changes
+sample = {
+  sampleSize;
+  newSample;
+
+  return d3
+    .shuffle(population.slice())
+    .slice(0, sampleSize);
+}
+
+// Create 10 cm histogram bins
+bins = d3
+  .bin()
+  .domain([100, 200])
+  .thresholds(d3.range(110, 200, 10))(sample)
+
+// Convert bin counts to probability densities
+histogram = bins.map(bin => ({
+  x0: bin.x0,
+  x1: bin.x1,
+  density: bin.length /
+    (sample.length * (bin.x1 - bin.x0))
+}))
+
+// Theoretical normal distribution
+normalCurve = d3.range(100, 200.1, 0.25).map(x => ({
+  x: x,
+  density:
+    Math.exp(-0.5 * ((x - mu) / sigma) ** 2) /
+    (sigma * Math.sqrt(2 * Math.PI))
+}))
+
+// Current sample statistics
+sampleMean = d3.mean(sample)
+sampleSD = d3.deviation(sample)
+
+// Interactive plot
+Plot.plot({
+  width: width,
+  height: 430,
+
+  title: `Sample size: ${sampleSize}`,
+
+  subtitle:
+    `Sample mean = ${sampleMean.toFixed(1)} cm; ` +
+    `sample SD = ${sampleSD.toFixed(1)} cm`,
+
+  caption:
+    "Red curve and dashed line: population. Blue line: sample mean.",
+
+  x: {
+    domain: [100, 200],
+    label: "Height (cm)"
+  },
+
+  y: {
+    domain: [0, 0.1], // max possible is 1/binwidth
+    label: "Density",
+    grid: true
+  },
+
+  marks: [
+    Plot.rectY(histogram, {
+      x1: "x0",
+      x2: "x1",
+      y1: 0,
+      y2: "density",
+      fill: "lightgray",
+      stroke: "white",
+      inset: 1
+    }),
+
+    Plot.line(normalCurve, {
+      x: "x",
+      y: "density",
+      stroke: "red",
+      strokeWidth: 3
+    }),
+
+    // True population mean
+    Plot.ruleX([mu], {
+      stroke: "red",
+      strokeWidth: 2,
+      strokeDasharray: "5,4"
+    }),
+
+    // Current sample mean
+    Plot.ruleX([sampleMean], {
+      stroke: "blue",
+      strokeWidth: 3
+    }),
+
+    Plot.ruleY([0])
+  ]
+})
+```
+
+
+
+

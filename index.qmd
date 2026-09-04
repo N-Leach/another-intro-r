@@ -2,3 +2,5 @@
 title: "Oh No, Not Again: An Introduction to R"
 subtitle: "A mostly harmless guide for people who have somehow avoided R until now."
 ---
+
+![](images/clipboard-4090905198.png){width="525"}

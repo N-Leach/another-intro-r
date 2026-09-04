@@ -2,9 +2,34 @@
 title: "Getting started"
 ---
 
-## Why R?
+## Why R? 
 
-## Installing R
+-   Free and open source
+
+-   Designed for statistics and data analysis
+
+    -   For most cases the base statistical modelling and data-visualisation libraries
+
+-   Modular: extend it with thousands of specialist packages
+
+-   Encourages transparent, reproducible code rather than hidden “button-clicking”
+
+-   Combines analysis, figures, citations, and writing in reproducible reports\\
+
+**Why R rather than Python?**
+
+Python is an excellent general-purpose language, while R was developed specifically for statistical computing and graphics. This does not mean that R is always better than Python. Python is often preferable for software development, machine learning systems, etc.
+
+**Used in practice**
+
+-   The [BBC published an R cookbook](https://bbc.github.io/rcookbook/) and the bbplot package for creating reproducible, publication-ready graphics in its house style.
+
+-   Quarto can turn an analysis into journal-ready HTML, PDF, or Word manuscripts, with journal-specific [templates](https://quarto.org/docs/journals) available through extensions.
+
+![](images/clipboard-973533794.png)
+
+
+# Installing R
 
 R is a programming language for statistical computing and data analysis, while RStudio provides a user-friendly interface for working with R.
 
@@ -12,7 +37,7 @@ R is a programming language for statistical computing and data analysis, while R
 
 2.  install [RStudio](https://www.rstudio.com/)
 
-There are plenty of tutorials (e.g: [QLS-MiCM](https://martinahyang.github.io/IntroToR/WebsiteCodes/Setup.html))
+There are plenty of tutorials, e.g.: [psyteachr](https://psyteachr.github.io/RSetGo/)
 
 ## **RStudio**
 

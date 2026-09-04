@@ -3,8 +3,10 @@ project:
 
 website:
   title: "another-intro-r"
-  navbar:
-    left:
+  sidebar:
+    style: docked
+    search: true
+    contents:
       - href: index.qmd
         text: Home
       - 1.getting_started.qmd
@@ -13,14 +15,18 @@ website:
       - 4.dataframes.qmd
       - 5.working_with_data.qmd 
       - 6.data_vis.qmd
-      - 7.stats_n_probs.qmd
+     # - 7.stats_n_probs.qmd
+      - cource_matterial.qmd
 
 format:
-  html:
+  html: 
     theme:
-      - cosmo
+      - united
     css: styles.css
     toc: true
+execute:
+  warning: false
+  message: false
+  
 
-editor: visual
 

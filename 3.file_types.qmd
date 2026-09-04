@@ -1,23 +1,85 @@
----
-title: "File types and best practice"
-format: html
----
+# Practicalities
+
+## File types
+
 ### Scripts
 
--   why
+An R script is a plain text file that contains R code. R scripts use the file extension `.R`.
 
--   comments
+You can run:
 
--   example screenshot
+-   a single line of code
+-   several selected lines
+-   the entire script
+
+Comments start with `#`. R ignores anything after `#` on that line.
+
+Comments are useful for explaining what your code does or leaving notes for yourself.
 
 ### Notebooks
 
-...
+A notebook (Rmarkdown `.Rmd` or Quarto `.qmd`) is a file that can contain both normal text and executable R code.
 
-### What to use:
+Unlike an R script, a notebook can combine:
 
-I almost exclusively use notebooks....
+-   explanatory text
+-   R code
+-   output
+-   tables
+-   figures
+-   equations
 
-## R Code – Best practices 
+R code is placed inside **code chunks**
 
-see: [r-bloggers](https://www.r-bloggers.com/2018/09/r-code-best-practices/)
+When you run the chunk, the output can appear directly underneath the code.
+
+This makes notebooks particularly useful for data analysis because you can keep the **code, results, and explanation together in one document**.
+
+## Packages
+
+R comes with many built-in functions, but you can add more functionality using **packages**.
+
+### Installing packages
+
+A package only needs to be installed once:
+
+``` r
+install.packages("tidyverse")
+```
+
+### Loading packages
+
+A package needs to be loaded each time you start a new R session:
+
+``` r
+library(tidyverse)
+```
+
+## Functions
+
+Functions perform actions in R. You have already used functions such as `c()`.
+
+A function is usually followed by parentheses:
+
+```{r}
+mean(c(1, 2, 3))
+```
+
+Values supplied to a function are called **arguments**:
+
+```{r}
+round(3.14159, digits = 2)
+```
+
+Packages provide additional functions. For example, after loading `ggplot2` from `tidyverse`, you can use functions provided by that package.
+
+## Writing readable R code
+
+Some simple habits make your R code much easier to read:
+
+-   use meaningful object names
+-   add spaces around operators
+-   use comments where they are useful
+-   keep your formatting consistent
+
+See: [R-bloggers](https://www.r-bloggers.com/2018/09/r-code-best-practices/)

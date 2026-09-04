@@ -13,8 +13,6 @@ travellers <- data.frame(
 
 ```
 
-## 
-
 ```{r}
 travellers
 # look at the top rows
@@ -100,9 +98,8 @@ You can check it with:
 ```{r}
 getwd()
 ```
+
 Rather than repeatedly changing the working directory with `setwd()`, it is better to work inside an RStudio project and use relative file paths.
 
-**Tip:** 
-Session \> Set Working Directory \> To File Source Location   
-
+**Tip:** Session \> Set Working Directory \> To File Source Location
 :::

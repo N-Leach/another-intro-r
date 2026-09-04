@@ -1,0 +1,221 @@
+---
+format: live-html
+engine: knitr
+live:
+  show-hints: true
+  show-solutions: true
+---
+
+{{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
+
+# Working with data
+
+## Functions
+
+R has a set of descriptive statistics functions.
+
+| Function    | Description                        |
+|-------------|------------------------------------|
+| `table(x)`  | Counts how often each value occurs |
+| `sum(x)`    | Adds the values                    |
+| `mean(x)`   | Arithmetic mean                    |
+| `median(x)` | Median                             |
+| `var(x)`    | Variance                           |
+| `sd(x)`     | Standard deviation                 |
+| `min(x)`    | Minimum                            |
+| `max(x)`    | Maximum                            |
+| `range(x)`  | Returns the minimum and maximum    |
+
+```{r}
+# Example
+marks <- c(7.5, 9, NA, 8, 6.5, 8, 7.5)
+round(sd(marks, na.rm = TRUE), 3)
+range(marks, na.rm = TRUE)
+```
+
+::: callout-important
+## Missing values
+
+Many functions return `NA` when the data contain missing values because the functions have `na.rm = TRUE` by default. Use `na.rm = TRUE` when you want the calculation to ignore missing values.
+
+```{r}
+mean(marks)
+mean(marks, na.rm = TRUE)
+```
+:::
+
+```{r}
+table(marks)
+```
+
+::: callout-note
+`table()` does not show missing values by default. If you want to see them, try:
+
+```{r}
+table(marks, useNA = "ifany")
+```
+:::
+
+## Your turn: the `iris` data
+
+The built-in `iris` data frame contains measurements for 150 iris flowers. You can inspect its help page with `?iris`.
+
+### Exercise 1 — What is in the data frame?
+
+How many variables does `iris` contain? What are their names?
+
+```{webr}
+#| setup: true
+#| exercise: iris_1
+data(iris)
+```
+
+```{webr}
+#| exercise: iris_1
+# Number of variables
+______
+
+# Variable names
+______
+```
+
+:::: {.hint exercise="iris_1"}
+::: {.callout-note collapse="false"}
+## Hint 1
+
+Two useful functions are `ncol()` and `names()`.
+:::
+::::
+
+:::: {.solution exercise="iris_1"}
+::: {.callout-tip collapse="false"}
+## Fully worked solution
+
+```{r}
+ncol(iris)
+names(iris)
+```
+:::
+::::
+
+### Exercise 2 — Count flowers by species
+
+Create a frequency table showing how many flowers belong to each species.
+
+```{webr}
+#| exercise: iris_2
+table(iris$______)
+```
+
+:::: {.hint exercise="iris_2"}
+::: {.callout-note collapse="false"}
+## Hint 1
+
+Use the `Species` column.
+:::
+::::
+
+:::: {.hint exercise="iris_2"}
+::: {.callout-note collapse="false"}
+## Hint 2
+
+Use `$` to select a column from a data frame
+:::
+::::
+
+:::: {.solution exercise="iris_2"}
+::: {.callout-tip collapse="false"}
+## Fully worked solution
+
+```{r}
+table(iris$Species, useNA = "ifany")
+```
+:::
+::::
+
+### Exercise 3 — Summarise petal length
+
+Compute the **mean**, **median**, and **range** of `Petal.Length`.
+
+```{webr}
+#| exercise: iris_3
+
+```
+
+:::: {.hint exercise="iris_3"}
+::: {.callout-note collapse="false"}
+## Hint 1
+
+You need the functions `mean()`, `median()`, and `range()`.
+:::
+::::
+
+:::: {.hint exercise="iris_3"}
+::: {.callout-note collapse="false"}
+## Hint 2
+
+Select petal length with: `iris$Petal.Length`
+:::
+::::
+
+:::: {.solution exercise="iris_3"}
+::: {.callout-tip collapse="false"}
+## Fully worked solution
+
+```{r}
+mean(iris$Petal.Length)
+median(iris$Petal.Length)
+range(iris$Petal.Length)
+```
+:::
+::::
+
+# Data wranging
+
+Tidyverse vs Base R
+
+```{r baseR_ifelse}
+dat <- readRDS("data/PlannedEnv_4countries.rds")
+
+                # ifelse(test, Yes, No)
+dat$continent <- ifelse(dat$country == "US" | dat$country == "Mexico", 
+                        "N. America",
+                        ifelse(dat$country == "India", 
+                               "Asia", 
+                               ifelse(dat$country == "Spain",
+                                      "Europe",
+                                      NA)))
+
+```
+
+If country is US or Mexico, then its N. America, if it is India then Asia, if Spain then Europe, if it is none these then NA
+
+```{r tidy_ifelse}
+library(tidyverse)
+
+dat <- dat |>
+  mutate(continent_tidy = case_when(
+    country %in% c("US", "Mexico") ~ "N. America",
+    country == "India" ~ "Asia",
+    country == "Spain" ~ "Europe",
+    is.na(country) ~ NA
+  ))
+
+any(dat$continent == dat$continent_tidy)
+```
+
+```{r}
+dat_female <- subset(dat, gender == "female")
+
+dat_female <- dat|>
+  filter(gender == "female")
+
+```
+
+# Exercises
+
+For exercises [Applied Data Skills](https://psyteachr.github.io/ads-v3/), chapters:
+
+-   4 Data Summaries
+
+-   9 Data Wrangling
