@@ -1,0 +1,22 @@
+project:
+  type: website
+
+website:
+  title: "another-intro-r"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - about.qmd
+      - calculateR.qmd
+      - file_types.qmd
+
+format:
+  html:
+    theme:
+      - cosmo
+    css: styles.css
+    toc: true
+
+editor: visual
+

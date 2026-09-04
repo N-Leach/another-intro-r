@@ -1,0 +1,23 @@
+---
+title: "File types and best practice"
+format: html
+---
+### Scripts
+
+-   why
+
+-   comments
+
+-   example screenshot
+
+### Notebooks
+
+...
+
+### What to use:
+
+I almost exclusively use notebooks....
+
+## R Code – Best practices 
+
+see: [r-bloggers](https://www.r-bloggers.com/2018/09/r-code-best-practices/)

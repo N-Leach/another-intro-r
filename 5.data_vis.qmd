@@ -1,0 +1,8 @@
+# Data Visualization
+
+::: callout-tip
+## Resources
+
+-   [Fundamentals of Data Visualization](https://clauswilke.com/dataviz/) Claus O. Wilke
+-   
+:::
