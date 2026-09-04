@@ -3,8 +3,10 @@ project:
 
 website:
   title: "another-intro-r"
-  navbar:
-    left:
+  sidebar:
+    style: docked
+    search: true
+    contents:
       - href: index.qmd
         text: Home
       - 1.getting_started.qmd
@@ -18,7 +20,7 @@ website:
 format:
   html:
     theme:
-      - cosmo
+      - united
     css: styles.css
     toc: true
 
