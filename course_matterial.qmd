@@ -49,9 +49,7 @@ curve(dnorm(x, mean = mean(heights), sd = sd(heights)),
 Taller bars represent more common ranges of height. The red curve is an idealised normal distribution with the same mean and standard deviation as our data. *Note* density: estimated probability per unit on the x-axis. For more on probability density functions (PDF) and kernel density estimation see: [The chemical statistician](https://chemicalstatistician.wordpress.com/2013/06/09/exploratory-data-analysis-kernel-density-estimation-in-r-on-ozone-pollution-data-in-new-york-and-ozonopolis/)
 
 ::: callout-tip
-
 You can already see from the summary statistics averages (mean, median, and mode) and more clearly from the plot that sample of heights are not normally distributed. In a truly normal distribution the mean = median = mode. In practice they are close together. Here there are only 8 observations: with a small sample, there is a greater chance of getting an unrepresentative picture of the population because of random variation.
-
 :::
 
 ```{ojs}
@@ -174,7 +172,3 @@ Plot.plot({
   ]
 })
 ```
-
-
-
-

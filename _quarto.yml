@@ -15,8 +15,8 @@ website:
       - 4.dataframes.qmd
       - 5.working_with_data.qmd 
       - 6.data_vis.qmd
+      - course_matterial.qmd
      # - 7.stats_n_probs.qmd
-      - cource_matterial.qmd
 
 format:
   html: 
