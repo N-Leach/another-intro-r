@@ -83,3 +83,7 @@ Some simple habits make your R code much easier to read:
 -   keep your formatting consistent
 
 See: [R-bloggers](https://www.r-bloggers.com/2018/09/r-code-best-practices/)
+
+### Automated styles: 
+
+Packages: [lintr](https://lintr.r-lib.org/) and [styler](https://styler.r-lib.org/) for information on their use, [see](https://riffomonas.org/code_club/2024-08-26-lintr-styler)
